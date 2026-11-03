@@ -1,0 +1,53 @@
+# Base Cube schema generated from the dbt model:
+#   models/marts/dim_customers.sql
+#
+# Source table in DuckDB:
+#   dev.marts.dim_customers
+#
+# Only the marts layer is exposed. The staging and intermediate dbt models
+# remain internal implementation details.
+
+cubes:
+  - name: dim_customers
+    title: Customers
+    description: "Customer dimension built by dbt from the example seed."
+    sql_table: marts.dim_customers
+
+    dimensions:
+      - name: customer_id
+        title: Customer ID
+        description: "Primary key for the customer."
+        sql: customer_id
+        type: number
+        primary_key: true
+        public: true
+
+      - name: customer_name
+        title: Customer Name
+        description: "Customer display name."
+        sql: customer_name
+        type: string
+
+      - name: signup_date
+        title: Signup Date
+        description: "Date the customer signed up."
+        sql: signup_date
+        type: time
+
+      - name: signup_month
+        title: Signup Month
+        description: "Month in which the customer signed up."
+        sql: signup_month
+        type: time
+
+    measures:
+      - name: count
+        title: Customer Count
+        description: "Number of customer rows."
+        type: count
+
+      - name: unique_customers
+        title: Unique Customers
+        description: "Distinct customers by customer_id."
+        type: count_distinct
+        sql: customer_id

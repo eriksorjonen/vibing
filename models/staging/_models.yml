@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: stg_example_customers
+    description: "Cleaned customer records from the example seed."
+    columns:
+      - name: customer_id
+        description: "Primary key for the customer."
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Customer display name."
+        data_tests:
+          - not_null
+      - name: signup_date
+        description: "Date the customer signed up."
+        data_tests:
+          - not_null

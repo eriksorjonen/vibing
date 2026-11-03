@@ -1,0 +1,31 @@
+services:
+  cube:
+    image: cubejs/cube:v1.8.18
+    container_name: dbt-duckdb-cube
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:4000:4000"
+      - "127.0.0.1:15432:15432"
+    environment:
+      CUBEJS_DEV_MODE: "true"
+      CUBEJS_DB_TYPE: "duckdb"
+      CUBEJS_DB_DUCKDB_DATABASE_PATH: "/data/dev.duckdb"
+      CUBEJS_DB_DUCKDB_MEMORY_LIMIT: "512MB"
+      CUBEJS_API_SECRET: "${CUBEJS_API_SECRET:-dev-secret-change-me}"
+      CUBEJS_WEB_SOCKETS: "true"
+      CUBEJS_PG_SQL_PORT: "15432"
+      CUBEJS_SQL_USER: "cube"
+      CUBEJS_SQL_PASSWORD: "${CUBEJS_SQL_PASSWORD:-cube-dev-password}"
+    volumes:
+      - .:/cube/conf
+      - ../data:/data
+    healthcheck:
+      test:
+        - "CMD"
+        - "node"
+        - "-e"
+        - "fetch('http://127.0.0.1:4000/readyz').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s

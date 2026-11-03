@@ -1,0 +1,34 @@
+name: 'dbt_duckdb'
+version: '1.0.0'
+config-version: 2
+
+profile: 'dbt_duckdb'
+
+require-dbt-version: [">=2.0.0", "<3.0.0"]
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+  - "logs"
+
+models:
+  dbt_duckdb:
+    +materialized: view
+    staging:
+      +schema: staging
+    intermediate:
+      +schema: intermediate
+    marts:
+      +materialized: table
+      +schema: marts
+
+seeds:
+  dbt_duckdb:
+    +schema: raw

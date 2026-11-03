@@ -1,0 +1,9 @@
+name: cube
+type: postgres
+options:
+  host: 127.0.0.1
+  port: 15432
+  database: cube
+  user: cube
+  password: cube-dev-password
+  ssl: false

@@ -1,0 +1,30 @@
+{
+  "name": "my-bi-report",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "TZ=UTC evidence build",
+    "build:strict": "TZ=UTC evidence build:strict",
+    "dev": "TZ=UTC evidence dev",
+    "test": "TZ=UTC evidence build",
+    "sources": "TZ=UTC evidence sources",
+    "sources:strict": "TZ=UTC evidence sources --strict",
+    "data:snapshot": "rm -rf deploy-data && cp -R .evidence/template/static/data deploy-data",
+    "preview": "TZ=UTC evidence preview"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=18.0.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "@evidence-dev/core-components": "^5.4.2",
+    "@evidence-dev/evidence": "^40.1.8",
+    "@evidence-dev/postgres": "^1.0.10",
+    "apache-arrow": "17.0.0"
+  },
+  "overrides": {
+    "jsonwebtoken": "9.0.0",
+    "trim@<0.0.3": ">0.0.3",
+    "axios": "^1.7.4"
+  }
+}

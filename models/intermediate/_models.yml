@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: int_customers_enriched
+    description: "Customer records enriched with a signup month."
+    columns:
+      - name: customer_id
+        description: "Primary key for the customer."
+        data_tests:
+          - unique
+          - not_null
+      - name: signup_month
+        description: "Month in which the customer signed up."
+        data_tests:
+          - not_null

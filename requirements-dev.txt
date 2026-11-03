@@ -1,0 +1,7 @@
+-r requirements.txt
+
+# Inspection-only DuckDB Python client.
+# 2.0.0 crashes with SIGILL on older CPUs without AVX support
+# (for example the Celeron N4000 used by some Crostini devices).
+# dbt v2 uses its own built-in DuckDB driver, so this pin does not affect dbt.
+duckdb==1.5.5

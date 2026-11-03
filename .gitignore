@@ -1,0 +1,76 @@
+# ---------------------------------------------------------------------------
+# Python / dbt
+# ---------------------------------------------------------------------------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# dbt generated artifacts
+target/
+logs/
+dbt_packages/
+.user.yml
+*.log
+
+# ---------------------------------------------------------------------------
+# DuckDB data and local raw files
+# ---------------------------------------------------------------------------
+*.duckdb
+*.duckdb.wal
+data/*
+!data/.gitkeep
+!data/raw/
+data/raw/*
+!data/raw/.gitkeep
+
+# ---------------------------------------------------------------------------
+# Cube Core
+# ---------------------------------------------------------------------------
+cube/.env
+cube/.cubestore/
+cube/**/.cubestore/
+
+# ---------------------------------------------------------------------------
+# Evidence / Node
+# ---------------------------------------------------------------------------
+node_modules/
+my-bi-report/node_modules/
+my-bi-report/.evidence/
+my-bi-report/build/
+my-bi-report/.svelte-kit/
+my-bi-report/.vite/
+my-bi-report/npm-debug.log*
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# Evidence direct-connector credentials
+connection.yaml
+**/connection.yaml
+!**/connection.yaml.example
+
+# ---------------------------------------------------------------------------
+# Secrets and environment files
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ---------------------------------------------------------------------------
+# OS / editor
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
