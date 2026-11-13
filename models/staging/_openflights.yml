@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_airports
+    description: "Cleaned OpenFlights airport records."
+    columns:
+      - name: airport_id
+        description: "OpenFlights airport identifier."
+        data_tests:
+          - unique
+          - not_null
+      - name: airport_name
+        description: "Airport name."
+        data_tests:
+          - not_null
+      - name: country
+        description: "Airport country."
+  - name: stg_airlines
+    description: "Cleaned OpenFlights airline records."
+    columns:
+      - name: airline_id
+        description: "OpenFlights airline identifier."
+        data_tests:
+          - unique
+          - not_null
+      - name: airline_name
+        description: "Airline name."
+  - name: stg_routes
+    description: "Cleaned OpenFlights route records."
+    columns:
+      - name: airline_id
+        data_tests:
+          - not_null
+      - name: source_airport_id
+        data_tests:
+          - not_null
+      - name: destination_airport_id
+        data_tests:
+          - not_null

@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: dim_airports
+    description: "Airport dimension from OpenFlights."
+    columns:
+      - name: airport_id
+        data_tests:
+          - unique
+          - not_null
+      - name: airport_name
+        data_tests:
+          - not_null
+  - name: dim_airlines
+    description: "Airline dimension from OpenFlights."
+    columns:
+      - name: airline_id
+        data_tests:
+          - unique
+          - not_null
+  - name: fct_routes
+    description: "One row per OpenFlights airline route."
+    columns:
+      - name: route_key
+        data_tests:
+          - unique
+          - not_null
+      - name: airline_id
+        data_tests:
+          - not_null
+      - name: source_airport_id
+        data_tests:
+          - not_null
+      - name: destination_airport_id
+        data_tests:
+          - not_null
+  - name: agg_routes_by_airline
+    description: "Route counts aggregated by airline."
+    columns:
+      - name: airline_id
+        data_tests:
+          - unique
+          - not_null
+  - name: agg_routes_by_country
+    description: "Route counts aggregated by source country."
+    columns:
+      - name: source_country
+        data_tests:
+          - unique
+          - not_null

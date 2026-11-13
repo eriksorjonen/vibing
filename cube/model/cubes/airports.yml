@@ -1,0 +1,59 @@
+# Cube schema for the OpenFlights airport dimension.
+# dbt model: models/marts/dim_airports.sql
+
+cubes:
+  - name: airports
+    title: Airports
+    description: "Airport dimension from OpenFlights."
+    sql_table: marts.dim_airports
+
+    dimensions:
+      - name: airport_id
+        title: Airport ID
+        sql: airport_id
+        type: number
+        primary_key: true
+        public: true
+
+      - name: airport_name
+        title: Airport Name
+        sql: airport_name
+        type: string
+
+      - name: city
+        title: City
+        sql: city
+        type: string
+
+      - name: country
+        title: Country
+        sql: country
+        type: string
+
+      - name: iata_code
+        title: IATA Code
+        sql: iata_code
+        type: string
+
+      - name: icao_code
+        title: ICAO Code
+        sql: icao_code
+        type: string
+
+      - name: airport_type
+        title: Airport Type
+        sql: airport_type
+        type: string
+
+      - name: latitude
+        sql: latitude
+        type: number
+
+      - name: longitude
+        sql: longitude
+        type: number
+
+    measures:
+      - name: count
+        title: Airport Count
+        type: count

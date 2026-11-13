@@ -25,7 +25,18 @@ def main() -> None:
                 """
             ).fetchall()
         )
-        print("sample rows:")
+        print("mart row counts:")
+        for table in [
+            "marts.dim_customers",
+            "marts.fct_earthquakes",
+            "marts.agg_earthquakes_daily",
+            "marts.dim_airports",
+            "marts.fct_routes",
+        ]:
+            count = con.sql(f"select count(*) from {table}").fetchone()[0]
+            print(f"  {table}: {count}")
+
+        print("sample customer rows:")
         print(con.sql("select * from marts.dim_customers limit 5").fetchall())
     finally:
         con.close()

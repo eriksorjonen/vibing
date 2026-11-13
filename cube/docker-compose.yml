@@ -16,6 +16,8 @@ services:
       CUBEJS_PG_SQL_PORT: "15432"
       CUBEJS_SQL_USER: "cube"
       CUBEJS_SQL_PASSWORD: "${CUBEJS_SQL_PASSWORD:-cube-dev-password}"
+      CUBEJS_DB_QUERY_LIMIT: "100000"
+      CUBEJS_DB_QUERY_DEFAULT_LIMIT: "100000"
     volumes:
       - .:/cube/conf
       - ../data:/data

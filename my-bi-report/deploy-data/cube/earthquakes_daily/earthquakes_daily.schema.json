@@ -1,0 +1,1 @@
+[{"name":"occurred_date","evidenceType":"date","typeFidelity":"precise"},{"name":"earthquake_count","evidenceType":"number","typeFidelity":"precise"},{"name":"max_magnitude","evidenceType":"number","typeFidelity":"precise"},{"name":"average_magnitude","evidenceType":"number","typeFidelity":"precise"},{"name":"average_depth_km","evidenceType":"number","typeFidelity":"precise"}]

@@ -87,6 +87,27 @@ The sample page `pages/index.md` contains:
 - a line chart of signups by month
 - a data table of customer counts
 
+## Report pages
+
+| Page | Data |
+|---|---|
+| `/` | Sample customer overview |
+| `/earthquakes/` | USGS earthquakes, last 30 days |
+| `/flights/` | OpenFlights airports, airlines, and routes |
+
+Evidence source queries live in `sources/cube/`:
+
+```text
+dim_customers.sql
+earthquakes.sql
+earthquakes_daily.sql
+airports.sql
+routes.sql
+```
+
+The report uses Cube cubes `dim_customers`, `earthquakes`, `earthquakes_daily`,
+`airports`, and `routes`.
+
 ## Deployment data snapshot
 
 GitHub Actions cannot reach the local Cube SQL API. The tracked `deploy-data/`

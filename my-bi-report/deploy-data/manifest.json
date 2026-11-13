@@ -1,1 +1,1 @@
-{"renderedFiles":{"cube":["static/data/cube/dim_customers/dim_customers.parquet"]}}
+{"renderedFiles":{"cube":["static/data/cube/airports/airports.parquet","static/data/cube/dim_customers/dim_customers.parquet","static/data/cube/earthquakes_daily/earthquakes_daily.parquet","static/data/cube/earthquakes/earthquakes.parquet","static/data/cube/routes/routes.parquet"]}}

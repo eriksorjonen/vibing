@@ -146,6 +146,18 @@ docker-compose up -d
 If `dbt build` reports a file-lock error, find and stop the process holding the
 DuckDB file before retrying.
 
+## Cubes
+
+The semantic layer exposes:
+
+| Cube | dbt mart |
+|---|---|
+| `dim_customers` | `marts.dim_customers` |
+| `earthquakes` | `marts.fct_earthquakes` |
+| `earthquakes_daily` | `marts.agg_earthquakes_daily` |
+| `airports` | `marts.dim_airports` |
+| `routes` | `marts.fct_routes` |
+
 ## Schema
 
 `model/cubes/dim_customers.yml` is the base Cube schema generated from the dbt

@@ -21,6 +21,9 @@ clean-targets:
 models:
   dbt_duckdb:
     +materialized: view
+    raw:
+      +materialized: table
+      +schema: raw
     staging:
       +schema: staging
     intermediate:

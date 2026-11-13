@@ -43,3 +43,8 @@ order by month
 ## Customer detail
 
 <DataTable data={customers} />
+
+## Explore
+
+- [Earthquakes — last 30 days](/earthquakes/)
+- [OpenFlights route network](/flights/)

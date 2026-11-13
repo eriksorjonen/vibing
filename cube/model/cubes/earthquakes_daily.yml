@@ -1,0 +1,37 @@
+# Cube schema for the daily earthquake aggregate.
+# dbt model: models/marts/agg_earthquakes_daily.sql
+
+cubes:
+  - name: earthquakes_daily
+    title: Earthquakes Daily
+    description: "Daily earthquake counts and magnitude statistics."
+    sql_table: marts.agg_earthquakes_daily
+
+    dimensions:
+      - name: occurred_date
+        title: Occurred Date
+        sql: occurred_date
+        type: time
+        primary_key: true
+        public: true
+
+    measures:
+      - name: earthquake_count
+        title: Earthquake Count
+        type: sum
+        sql: earthquake_count
+
+      - name: max_magnitude
+        title: Maximum Magnitude
+        type: max
+        sql: max_magnitude
+
+      - name: average_magnitude
+        title: Average Magnitude
+        type: avg
+        sql: avg_magnitude
+
+      - name: average_depth_km
+        title: Average Depth (km)
+        type: avg
+        sql: avg_depth_km

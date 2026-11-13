@@ -1,0 +1,99 @@
+# Cube schema for the USGS earthquake fact table.
+# dbt model: models/marts/fct_earthquakes.sql
+
+cubes:
+  - name: earthquakes
+    title: Earthquakes
+    description: "USGS earthquake events from the last 30 days."
+    sql_table: marts.fct_earthquakes
+
+    dimensions:
+      - name: event_id
+        title: Event ID
+        description: "USGS event identifier."
+        sql: event_id
+        type: string
+        primary_key: true
+        public: true
+
+      - name: occurred_at
+        title: Occurred At
+        description: "UTC timestamp of the event."
+        sql: occurred_at
+        type: time
+
+      - name: occurred_date
+        title: Occurred Date
+        description: "UTC date of the event."
+        sql: occurred_date
+        type: time
+
+      - name: magnitude
+        title: Magnitude
+        sql: magnitude
+        type: number
+
+      - name: depth_km
+        title: Depth (km)
+        sql: depth_km
+        type: number
+
+      - name: place
+        title: Place
+        description: "Human-readable location description."
+        sql: place
+        type: string
+
+      - name: magnitude_band
+        title: Magnitude Band
+        sql: magnitude_band
+        type: string
+
+      - name: magnitude_type
+        title: Magnitude Type
+        sql: magnitude_type
+        type: string
+
+      - name: event_type
+        title: Event Type
+        sql: event_type
+        type: string
+
+      - name: status
+        title: Review Status
+        sql: status
+        type: string
+
+      - name: latitude
+        sql: latitude
+        type: number
+
+      - name: longitude
+        sql: longitude
+        type: number
+
+    measures:
+      - name: count
+        title: Earthquake Count
+        type: count
+
+      - name: average_magnitude
+        title: Average Magnitude
+        type: avg
+        sql: magnitude
+
+      - name: max_magnitude
+        title: Maximum Magnitude
+        type: max
+        sql: magnitude
+
+      - name: average_depth_km
+        title: Average Depth (km)
+        type: avg
+        sql: depth_km
+
+      - name: significant_count
+        title: Magnitude 5+ Events
+        type: count
+        filters:
+          - sql: "{CUBE}.magnitude >= 5"

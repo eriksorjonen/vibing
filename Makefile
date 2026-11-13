@@ -2,7 +2,7 @@ VENV := .venv
 DBT := $(VENV)/bin/dbt --profiles-dir .
 PY := $(VENV)/bin/python
 
-.PHONY: setup version parse debug seed run test build verify docs serve lint clean reset
+.PHONY: setup version download-data parse debug seed run test build verify docs serve lint clean reset
 
 setup:
 	mkdir -p data data/raw
@@ -12,6 +12,9 @@ setup:
 
 version:
 	$(DBT) --version
+
+download-data:
+	./scripts/download_open_data.sh
 
 parse:
 	$(DBT) parse

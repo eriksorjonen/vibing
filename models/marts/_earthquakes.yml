@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: fct_earthquakes
+    description: "One row per USGS earthquake event."
+    columns:
+      - name: event_id
+        data_tests:
+          - unique
+          - not_null
+      - name: occurred_at
+        data_tests:
+          - not_null
+      - name: occurred_date
+        data_tests:
+          - not_null
+      - name: magnitude
+        data_tests:
+          - not_null
+  - name: agg_earthquakes_daily
+    description: "Daily earthquake counts and magnitude statistics."
+    columns:
+      - name: occurred_date
+        data_tests:
+          - unique
+          - not_null
+      - name: earthquake_count
+        data_tests:
+          - not_null

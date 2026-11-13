@@ -1,0 +1,103 @@
+# Cube schema for the OpenFlights route fact table.
+# dbt model: models/marts/fct_routes.sql
+
+cubes:
+  - name: routes
+    title: Airline Routes
+    description: "Airline route records from OpenFlights, enriched with airport and airline attributes."
+    sql_table: marts.fct_routes
+
+    dimensions:
+      - name: route_key
+        title: Route Key
+        description: "Synthetic unique route key."
+        sql: route_key
+        type: number
+        primary_key: true
+        public: true
+
+      - name: airline_id
+        title: Airline ID
+        sql: airline_id
+        type: number
+
+      - name: airline_name
+        title: Airline
+        sql: airline_name
+        type: string
+
+      - name: airline_country
+        title: Airline Country
+        sql: airline_country
+        type: string
+
+      - name: airline_iata
+        title: Airline IATA
+        sql: airline_iata
+        type: string
+
+      - name: source_airport_id
+        title: Source Airport ID
+        sql: source_airport_id
+        type: number
+
+      - name: source_airport_name
+        title: Source Airport
+        sql: source_airport_name
+        type: string
+
+      - name: source_city
+        title: Source City
+        sql: source_city
+        type: string
+
+      - name: source_country
+        title: Source Country
+        sql: source_country
+        type: string
+
+      - name: destination_airport_id
+        title: Destination Airport ID
+        sql: destination_airport_id
+        type: number
+
+      - name: destination_airport_name
+        title: Destination Airport
+        sql: destination_airport_name
+        type: string
+
+      - name: destination_city
+        title: Destination City
+        sql: destination_city
+        type: string
+
+      - name: destination_country
+        title: Destination Country
+        sql: destination_country
+        type: string
+
+      - name: stops
+        title: Stops
+        sql: stops
+        type: number
+
+      - name: equipment
+        title: Equipment
+        sql: equipment
+        type: string
+
+    measures:
+      - name: route_count
+        title: Route Count
+        type: count
+
+      - name: average_stops
+        title: Average Stops
+        type: avg
+        sql: stops
+
+      - name: nonstop_count
+        title: Nonstop Routes
+        type: count
+        filters:
+          - sql: "{CUBE}.stops = 0"

@@ -59,6 +59,7 @@ Or use the Makefile:
 
 ```bash
 make setup
+make download-data
 make debug
 make build
 make verify
@@ -147,6 +148,37 @@ print(con.sql("select * from marts.dim_customers limit 5").fetchall())
 con.close()
 PY
 ```
+
+## Open datasets
+
+Two public datasets are included:
+
+| Dataset | Source | dbt marts |
+|---|---|---|
+| Earthquakes, last 30 days | USGS Earthquake Hazards Program | `fct_earthquakes`, `agg_earthquakes_daily` |
+| Airports, airlines, and routes | OpenFlights | `dim_airports`, `dim_airlines`, `fct_routes`, `agg_routes_by_airline`, `agg_routes_by_country` |
+
+Download or refresh the raw files:
+
+```bash
+./scripts/download_open_data.sh
+```
+
+Raw files land in `data/raw/` and are gitignored. Then rebuild:
+
+```bash
+# Stop Cube first because it holds the DuckDB write lock
+cd cube && docker-compose down
+cd ..
+source .venv/bin/activate
+dbt build
+```
+
+Cube cubes: `earthquakes`, `earthquakes_daily`, `airports`, `routes`.
+Evidence pages: `/earthquakes/` and `/flights/`.
+
+Licenses: USGS data is public domain; OpenFlights is Open Database License
+(ODbL). See the source links in `scripts/download_open_data.sh`.
 
 ## Git and GitHub Pages
 
