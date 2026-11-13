@@ -2,7 +2,7 @@ VENV := .venv
 DBT := $(VENV)/bin/dbt --profiles-dir .
 PY := $(VENV)/bin/python
 
-.PHONY: setup version download-data parse debug seed run test build verify docs serve lint clean reset
+.PHONY: setup version download-data parse debug seed run test build verify docs serve lint cube-tools cube-tools-check clean reset
 
 setup:
 	mkdir -p data data/raw
@@ -45,6 +45,12 @@ serve:
 
 lint:
 	$(DBT) lint
+
+cube-tools:
+	cd cube-tools && npm start
+
+cube-tools-check:
+	cd cube-tools && npm run check
 
 clean:
 	$(DBT) clean

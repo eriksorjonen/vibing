@@ -1,0 +1,11 @@
+{
+  "name": "cube-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Read-only semantic-layer tools for LLM function calling, backed by Cube.",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.mjs",
+    "check": "node --check server.mjs && node --check examples/openai-compatible.mjs"
+  }
+}

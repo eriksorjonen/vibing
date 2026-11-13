@@ -82,6 +82,7 @@ snapshots/       # dbt snapshots
 checks/          # Optional dbt v2 project checks
 data/            # Local DuckDB files and raw data
 cube/            # Cube Core Docker setup and semantic model
+cube-tools/      # Local LLM function-calling server for Cube
 scripts/         # Local verification helpers
 ```
 
@@ -179,6 +180,49 @@ Evidence pages: `/earthquakes/` and `/flights/`.
 
 Licenses: USGS data is public domain; OpenFlights is Open Database License
 (ODbL). See the source links in `scripts/download_open_data.sh`.
+
+## LLM tool calling
+
+`cube-tools/` is a small dependency-free HTTP server that exposes the Cube
+semantic model to an LLM through two read-only tools:
+
+| Tool | Purpose |
+|---|---|
+| `get_semantic_model` | Discover cubes, measures, dimensions, and segments |
+| `run_cube_query` | Validate member names and run a Cube query |
+
+Start it after Cube:
+
+```bash
+cd /home/eriksorj/projects/dbt_duckdb/cube
+docker-compose up -d
+
+cd ../cube-tools
+cp .env.example .env
+npm start
+```
+
+The server listens on `http://127.0.0.1:4100`. Test it:
+
+```bash
+curl -sS http://127.0.0.1:4100/health
+curl -sS http://127.0.0.1:4100/tools
+```
+
+Example OpenAI-compatible/DeepSeek client:
+
+```bash
+cd cube-tools
+
+OPENAI_API_KEY=... \
+OPENAI_BASE_URL=https://api.deepseek.com \
+OPENAI_MODEL=deepseek-chat \
+node examples/openai-compatible.mjs \
+  "Which airlines have the most routes?"
+```
+
+The tool server is local-only by default and has no raw SQL endpoint. See
+`cube-tools/README.md` for configuration, allowlisting, and security notes.
 
 ## Git and GitHub Pages
 
