@@ -56,6 +56,7 @@ const messages = [
       'Always call get_semantic_model before writing a query.',
       'Never invent cube, measure, dimension, or segment names.',
       'Use run_cube_query to fetch data.',
+      'Pass order as an object mapping member names to asc or desc.',
       'When presenting results, mention the Cube query you used.'
     ].join(' ')
   },

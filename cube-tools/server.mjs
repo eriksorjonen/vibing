@@ -101,23 +101,10 @@ const tools = [
                 items: { type: 'string' }
               },
               order: {
-                oneOf: [
-                  {
-                    type: 'object',
-                    additionalProperties: { type: 'string' }
-                  },
-                  {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        member: { type: 'string' },
-                        direction: { type: 'string' }
-                      },
-                      required: ['member', 'direction']
-                    }
-                  }
-                ]
+                type: 'object',
+                description:
+                  'Map of member name to sort direction, e.g. {"routes.route_count":"desc"}.',
+                additionalProperties: { type: 'string' }
               },
               limit: { type: 'number' },
               timezone: { type: 'string' },
@@ -235,6 +222,25 @@ function assertKnownMember(names, member, kind) {
   }
 }
 
+function normalizeOrder(order) {
+  if (!order) return undefined;
+  if (Array.isArray(order)) {
+    return Object.fromEntries(
+      order
+        .map((entry) => {
+          if (Array.isArray(entry) && entry.length >= 2) return [entry[0], entry[1]];
+          if (entry && typeof entry === 'object' && entry.member) {
+            return [entry.member, entry.direction || 'asc'];
+          }
+          return null;
+        })
+        .filter(Boolean)
+    );
+  }
+  if (typeof order === 'object') return order;
+  return undefined;
+}
+
 function validateQuery(query, model) {
   if (!query || typeof query !== 'object' || Array.isArray(query)) {
     throw new HttpError(400, 'query must be a JSON object.');
@@ -257,11 +263,8 @@ function validateQuery(query, model) {
     assertKnownMember(names, timeDimension.dimension, 'time dimension');
   }
 
-  if (Array.isArray(query.order)) {
-    for (const order of query.order) assertKnownMember(names, order.member, 'order');
-  } else if (query.order && typeof query.order === 'object') {
-    for (const member of Object.keys(query.order)) assertKnownMember(names, member, 'order');
-  }
+  const order = normalizeOrder(query.order);
+  for (const member of Object.keys(order || {})) assertKnownMember(names, member, 'order');
 }
 
 async function runCubeQuery(input) {
@@ -270,10 +273,17 @@ async function runCubeQuery(input) {
 
   validateQuery(query, model);
 
+  const order = normalizeOrder(query.order);
   const safeQuery = {
     ...query,
     limit: Math.min(Number(query.limit) || MAX_ROWS, MAX_ROWS)
   };
+
+  if (order) {
+    safeQuery.order = order;
+  } else {
+    delete safeQuery.order;
+  }
 
   const result = await cubeRequest('/load', {
     method: 'POST',
